@@ -1,37 +1,100 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
-    text-align: center;
     margin: 0;
-    padding: 80px 20px;
+    background-color: #f4f6f8;
 }
 
-h1 {
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background-color: white;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
     color: #1f2937;
-    font-size: 40px;
 }
 
-p {
+nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+nav a {
+    text-decoration: none;
     color: #4b5563;
-    font-size: 18px;
-    margin-bottom: 30px;
+    font-size: 16px;
 }
 
-h2 {
+nav a:hover {
     color: #1f2937;
 }
 
-button {
+nav button {
     background-color: #1f2937;
     color: white;
     border: none;
-    padding: 12px 24px;
-    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.tagline {
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    color: #111827;
+    font-size: 52px;
+    line-height: 1.15;
+    margin: 0 0 25px;
+}
+
+.description {
+    color: #6b7280;
+    font-size: 19px;
+    line-height: 1.6;
+    margin-bottom: 35px;
+}
+
+.hero-buttons button {
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    margin: 0 6px;
     border-radius: 6px;
     font-size: 16px;
     cursor: pointer;
 }
 
-button:hover {
+.hero-buttons button:hover {
     background-color: #374151;
+}
+
+.hero-buttons .secondary-button {
+    background-color: white;
+    color: #1f2937;
+    border: 1px solid #d1d5db;
 }
