@@ -98,3 +98,54 @@ nav button {
     color: #1f2937;
     border: 1px solid #d1d5db;
 }
+.features {
+    background-color: white;
+    padding: 100px 60px;
+    text-align: center;
+}
+
+.section-heading {
+    max-width: 700px;
+    margin: 0 auto 60px;
+}
+
+.section-heading h2 {
+    color: #111827;
+    font-size: 36px;
+    margin: 15px 0;
+}
+
+.section-heading p {
+    color: #6b7280;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.feature-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    max-width: 1200px;
+    margin: auto;
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    background-color: #f8fafc;
+    width: 220px;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.feature-card h3 {
+    color: #1f2937;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.feature-card p {
+    color: #6b7280;
+    line-height: 1.6;
+    font-size: 15px;
+}
