@@ -149,3 +149,126 @@ nav button {
     line-height: 1.6;
     font-size: 15px;
 }
+.how-it-works {
+    padding: 100px 60px;
+    background-color: #f4f6f8;
+    text-align: center;
+}
+
+.steps {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    max-width: 1100px;
+    margin: auto;
+    flex-wrap: wrap;
+}
+
+.step {
+    width: 210px;
+    padding: 25px;
+}
+
+.step-number {
+    font-size: 18px;
+    font-weight: bold;
+    color: #6b7280;
+    margin-bottom: 15px;
+}
+
+.step h3 {
+    color: #1f2937;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.step p {
+    color: #6b7280;
+    font-size: 15px;
+    line-height: 1.6;
+}
+.footer {
+    background-color: #111827;
+    color: white;
+    padding: 60px;
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.footer h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.footer p {
+    color: #9ca3af;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.footer-bottom {
+    max-width: 1100px;
+    margin: 40px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid #374151;
+    text-align: center;
+}
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f6f8;
+}
+
+.login-box {
+    background-color: white;
+    width: 380px;
+    padding: 45px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.login-box h1 {
+    color: #111827;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.login-box p {
+    color: #6b7280;
+    margin-bottom: 30px;
+}
+
+.login-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-box input {
+    padding: 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.login-box button {
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background-color: #374151;
+}
