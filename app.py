@@ -31,11 +31,26 @@ def login():
                 if role == "student":
                     return render_template("student_dashboard.html", username=username)
 
+                if role == "staff":
+                    return render_template("staff_dashboard.html", username=username)
+
         return "Invalid username, password, or role."
 
     role = request.args.get("role", "student")
 
     return render_template("login.html", role=role)
+
+
+@app.route("/submit-request", methods=["GET", "POST"])
+def submit_request():
+    if request.method == "POST":
+        request_type = request.form["request_type"]
+        description = request.form["description"]
+
+        return f"Request submitted successfully! Type: {request_type}"
+
+    return render_template("submit_request.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Request - AdminNova</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <div class="dashboard-header">
+            <h1>AdminNova</h1>
+            <p>Submit Administrative Request</p>
+        </div>
+
+        <div class="dashboard-content">
+
+            <h2>Submit a New Request</h2>
+
+            <p>
+                Fill in the details below to submit your administrative request.
+            </p>
+
+            <form method="POST" action="/submit-request">
+
+                <label>Request Type</label>
+
+                <select name="request_type" required>
+                    <option value="">Select request type</option>
+                    <option value="Bonafide Certificate">Bonafide Certificate</option>
+                    <option value="Fee Refund">Fee Refund</option>
+                    <option value="Course Approval">Course Approval</option>
+                    <option value="Document Request">Document Request</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label>Description</label>
+
+                <textarea
+                    name="description"
+                    placeholder="Describe your request"
+                    rows="6"
+                    required
+                ></textarea>
+
+                <button type="submit">Submit Request</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

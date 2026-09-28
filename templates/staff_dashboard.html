@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Dashboard - AdminNova</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <div class="dashboard-header">
+            <h1>AdminNova</h1>
+            <p>Staff Dashboard</p>
+        </div>
+
+        <div class="dashboard-content">
+
+            <h2>Welcome, {{ username }}</h2>
+
+            <p>
+                Manage, review and process administrative requests
+                assigned to your department.
+            </p>
+
+            <div class="dashboard-cards">
+
+                <div class="dashboard-card">
+                    <h3>Pending Requests</h3>
+                    <p>View requests waiting for your action.</p>
+                    <button>View Requests</button>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Processed Requests</h3>
+                    <p>View requests that you have already processed.</p>
+                    <button>View Processed</button>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Notifications</h3>
+                    <p>Check important administrative updates.</p>
+                    <button>View Notifications</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
