@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Requests - AdminNova</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <div class="dashboard-header">
+        <h1>AdminNova</h1>
+        <p>My Requests</p>
+    </div>
+
+    <div class="dashboard-content">
+
+        <h2>My Administrative Requests</h2>
+
+        {% if requests %}
+
+            {% for req in requests %}
+
+            <div class="dashboard-card">
+                <h3>{{ req.request_type }}</h3>
+
+                <p>{{ req.description }}</p>
+
+                <p><strong>Status:</strong> {{ req.status }}</p>
+
+                <p><strong>Request ID:</strong> {{ req.request_id }}</p>
+
+                <p><strong>Submitted:</strong> {{ req.submitted_at }}</p>
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>You have not submitted any requests yet.</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

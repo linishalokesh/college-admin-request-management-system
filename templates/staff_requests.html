@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pending Requests - AdminNova</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <div class="dashboard-header">
+        <h1>AdminNova</h1>
+        <p>Pending Requests</p>
+    </div>
+
+    <div class="dashboard-content">
+
+        <h2>Pending Administrative Requests</h2>
+
+        {% if requests %}
+
+            {% for req in requests %}
+
+                <div class="dashboard-card">
+
+                    <h3>{{ req.request_type }}</h3>
+
+                    <p>
+                        <strong>Request ID:</strong>
+                        {{ req.request_id }}
+                    </p>
+
+                    <p>
+                        <strong>Student:</strong>
+                        {{ req.student_username }}
+                    </p>
+
+                    <p>
+                        <strong>Description:</strong>
+                        {{ req.description }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        {{ req.status }}
+                    </p>
+
+                    <p>
+                        <strong>Submitted:</strong>
+                        {{ req.submitted_at }}
+                    </p>
+
+                    <form method="POST" action="/update-request/{{ req.request_id }}">
+
+                        <button type="submit" name="action" value="approve">
+                            Approve
+                        </button>
+
+                        <button type="submit" name="action" value="reject">
+                            Reject
+                        </button>
+
+                    </form>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No pending requests.</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
