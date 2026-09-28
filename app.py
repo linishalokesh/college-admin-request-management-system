@@ -1,5 +1,15 @@
 from flask import Flask, render_template, request
+import mysql.connector
+import os
+db = mysql.connector.connect(
+    host="127.0.0.1",
+    port=3306,
+    user="root",
+    password=os.getenv("MYSQL_PASSWORD"),
+    database="adminnova"
+)
 
+print("MySQL connected successfully!")
 app = Flask(__name__)
 
 users = {
