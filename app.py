@@ -2,6 +2,17 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+users = {
+    "1BM23CS001": {
+        "password": "student123",
+        "role": "student"
+    },
+    "STAFF001": {
+        "password": "staff123",
+        "role": "staff"
+    }
+}
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -11,9 +22,16 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        role = request.form["role"]
 
-        print("Username:", username)
-        print("Password:", password)
+        if username in users:
+            user = users[username]
+
+            if user["password"] == password and user["role"] == role:
+                if role == "student":
+                    return render_template("student_dashboard.html", username=username)
+
+        return "Invalid username, password, or role."
 
     role = request.args.get("role", "student")
 
