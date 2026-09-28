@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -6,9 +6,18 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        print("Username:", username)
+        print("Password:", password)
+
+    role = request.args.get("role", "student")
+
+    return render_template("login.html", role=role)
 
 if __name__ == "__main__":
     app.run(debug=True)

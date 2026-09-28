@@ -1,31 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login - CampusFlow</title>
+    <title>Login - AdminNova</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
 
-    <div class="login-page">
+    <div class="portal-login">
 
-        <div class="login-box">
+        <div class="login-left">
 
-            <h1>Welcome to CampusFlow</h1>
+            <div class="college-header">
+                <h2>BMS INSTITUTE OF TECHNOLOGY & MANAGEMENT</h2>
+                <p>College Administrative Portal</p>
+            </div>
 
-            <p>Login to manage your college requests.</p>
+            <div class="welcome-content">
+                <h1>Welcome to AdminNova.</h1>
 
-            <form>
-                <input type="email" placeholder="Email Address">
+                <p>
+                    A centralized platform for managing and tracking
+                    college administrative requests.
+                </p>
 
-                <input type="password" placeholder="Password">
+                <div class="notice-board">
+                    <h2>Notice Board</h2>
 
-                <button type="submit">Login</button>
-            </form>
+                    <div class="notice">
+                        <span>ⓘ</span>
+                        <p>
+                            Submit and track your administrative requests
+                            through one centralized platform.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="login-right">
+
+            <div class="portal-login-box">
+
+                <h1>Login to Your Account</h1>
+
+<p class="login-subtitle">
+    Select your portal to continue
+</p>
+
+<div class="role-selection">
+
+    <button type="button" class="role-button {% if role == 'student' %}active{% endif %}">
+    Student
+</button>
+
+<button type="button" class="role-button {% if role == 'staff' %}active{% endif %}">
+    Staff
+</button>
+
+</div>
+
+                    <form method="POST" action="/login">
+
+    <label>Username</label>
+    <input type="text" name="username" placeholder="Enter your USN">
+
+    <label>Password</label>
+    <input type="password" name="password" placeholder="Enter your password">
+
+    <div class="login-options">
+        <a href="#">Forgot Password?</a>
+        <button type="submit">LOGIN</button>
+    </div>
+
+</form>
+
+            </div>
 
         </div>
 
     </div>
+<script>
+    const roleButtons = document.querySelectorAll(".role-button");
 
+    roleButtons.forEach(button => {
+        button.addEventListener("click", function() {
+
+            roleButtons.forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+            this.classList.add("active");
+        });
+    });
+</script>
 </body>
 </html>
