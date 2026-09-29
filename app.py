@@ -22,7 +22,53 @@ app.secret_key = "adminnova-secret-key"
 @app.route("/")
 def home():
     return render_template("index.html")
+@app.route("/student-dashboard")
+def student_dashboard():
 
+    if "username" not in session or session.get("role") != "student":
+        return redirect("/login?role=student")
+
+    username = session["username"]
+
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute(
+        "SELECT COUNT(*) AS total FROM requests WHERE student_username = %s",
+        (username,)
+    )
+    total_requests = cursor.fetchone()["total"]
+
+    cursor.execute(
+        """
+        SELECT COUNT(*) AS pending
+        FROM requests
+        WHERE student_username = %s
+        AND status = 'Submitted'
+        """,
+        (username,)
+    )
+    pending_requests = cursor.fetchone()["pending"]
+
+    cursor.execute(
+        """
+        SELECT COUNT(*) AS completed
+        FROM requests
+        WHERE student_username = %s
+        AND status IN ('Approved', 'Rejected')
+        """,
+        (username,)
+    )
+    completed_requests = cursor.fetchone()["completed"]
+
+    cursor.close()
+
+    return render_template(
+        "student_dashboard.html",
+        username=username,
+        total_requests=total_requests,
+        pending_requests=pending_requests,
+        completed_requests=completed_requests
+    )
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -47,10 +93,7 @@ def login():
             session["role"] = role
 
             if role == "student":
-                return render_template(
-                    "student_dashboard.html",
-                    username=username
-                )
+                return redirect("/student-dashboard")
 
             if role == "staff":
                 return render_template(

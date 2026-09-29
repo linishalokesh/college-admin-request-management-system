@@ -5,51 +5,251 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
-<body>
+<body class="portal-body">
 
-    <div class="dashboard">
+    <div class="portal-layout">
 
-        <div class="dashboard-header">
-            <h1>AdminNova</h1>
-            <p>Student Dashboard</p>
-        </div>
+        <aside class="sidebar">
 
-        <div class="dashboard-content">
+            <div class="brand">
+                <div class="brand-icon">A</div>
 
-            <h2>Welcome, {{ username }}</h2>
+                <div>
+                    <h2>AdminNova</h2>
+                    <span>Student Portal</span>
+                </div>
+            </div>
 
-            <p>
-                Manage and track your college administrative requests
-                from one place.
-            </p>
+            <nav class="sidebar-nav">
 
-            <div class="dashboard-cards">
+                <a href="#" class="nav-item active">
+                    <span>⌂</span>
+                    Dashboard
+                </a>
 
-                <div class="dashboard-card">
-                    <h3>New Request</h3>
-                    <p>Submit a new administrative request.</p>
-                    <a href="/submit-request">
-    <button>Submit Request</button>
-</a>
+                <a href="/my-requests" class="nav-item">
+                    <span>▣</span>
+                    My Requests
+                </a>
+
+                <a href="/submit-request" class="nav-item">
+                    <span>＋</span>
+                    New Request
+                </a>
+
+                <a href="#" class="nav-item">
+                    <span>◉</span>
+                    Notifications
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="profile-mini">
+                    <div class="profile-avatar">
+                        {{ username[0] | upper }}
+                    </div>
+
+                    <div>
+                        <strong>{{ username }}</strong>
+                        <span>Student</span>
+                    </div>
                 </div>
 
-                <div class="dashboard-card">
-                    <h3>My Requests</h3>
-                    <p>View and track your submitted requests.</p>
-                    <a href="/my-requests">
-                    <button>View Requests</button>
-                    </a>
-                </div>
-
-                <div class="dashboard-card">
-                    <h3>Notifications</h3>
-                    <p>Check updates regarding your requests.</p>
-                    <button>View Notifications</button>
-                </div>
+                <a href="/login" class="logout-link">
+                    <span>↪</span>
+                    Logout
+                </a>
 
             </div>
 
-        </div>
+        </aside>
+
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+                    <p class="breadcrumb">Student Portal / Dashboard</p>
+                </div>
+
+                <div class="topbar-right">
+
+                    <button class="notification-button">
+                        ♧
+                        <span></span>
+                    </button>
+
+                    <div class="top-profile">
+                        <div class="profile-avatar small">
+                            {{ username[0] | upper }}
+                        </div>
+
+                        <div>
+                            <strong>{{ username }}</strong>
+                            <small>Student</small>
+                        </div>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <section class="dashboard-area">
+
+                <div class="welcome-section">
+
+                    <div>
+                        <p class="eyebrow">STUDENT DASHBOARD</p>
+
+                        <h1>
+                            Welcome back, {{ username }}.
+                        </h1>
+
+                        <p class="welcome-text">
+                            Manage your college administrative requests
+                            and keep track of their progress from one place.
+                        </p>
+                    </div>
+
+                    <a href="/submit-request" class="primary-button">
+                        + New Request
+                    </a>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-icon">▣</div>
+
+                        <div>
+                            <span>Total Requests</span>
+                            <h2>{{ total_requests }}</h2>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-card">
+                        <div class="stat-icon">◷</div>
+
+                        <div>
+                            <span>Pending</span>
+                            <h2>{{ pending_requests }}</h2>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-card">
+                        <div class="stat-icon">✓</div>
+
+                        <div>
+                            <span>Completed</span>
+                            <h2>{{ completed_requests }}</h2>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="section-heading">
+
+                    <div>
+                        <p class="eyebrow">QUICK ACCESS</p>
+                        <h2>Manage your requests</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="action-grid">
+
+                    <a href="/submit-request" class="action-card">
+
+                        <div class="action-icon">
+                            +
+                        </div>
+
+                        <div>
+                            <h3>New Request</h3>
+
+                            <p>
+                                Submit a new administrative request
+                                to the college.
+                            </p>
+                        </div>
+
+                        <span class="arrow">→</span>
+
+                    </a>
+
+
+                    <a href="/my-requests" class="action-card">
+
+                        <div class="action-icon">
+                            ▣
+                        </div>
+
+                        <div>
+                            <h3>My Requests</h3>
+
+                            <p>
+                                View your requests and track their
+                                current status.
+                            </p>
+                        </div>
+
+                        <span class="arrow">→</span>
+
+                    </a>
+
+
+                    <a href="#" class="action-card">
+
+                        <div class="action-icon">
+                            ◉
+                        </div>
+
+                        <div>
+                            <h3>Notifications</h3>
+
+                            <p>
+                                Check updates and important
+                                administrative notifications.
+                            </p>
+                        </div>
+
+                        <span class="arrow">→</span>
+
+                    </a>
+
+                </div>
+
+
+                <div class="info-banner">
+
+                    <div class="info-symbol">
+                        i
+                    </div>
+
+                    <div>
+                        <strong>Keep track of your requests</strong>
+
+                        <p>
+                            You can monitor the progress of every
+                            administrative request through My Requests.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
 
     </div>
 

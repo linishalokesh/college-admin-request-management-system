@@ -5,49 +5,283 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
-<body>
+<body class="portal-body">
 
-    <div class="dashboard">
+    <div class="portal-layout">
 
-        <div class="dashboard-header">
-            <h1>AdminNova</h1>
-            <p>Staff Dashboard</p>
-        </div>
+        <aside class="sidebar">
 
-        <div class="dashboard-content">
+            <div class="brand">
+                <div class="brand-icon">A</div>
 
-            <h2>Welcome, {{ username }}</h2>
+                <div>
+                    <h2>AdminNova</h2>
+                    <span>Staff Portal</span>
+                </div>
+            </div>
 
-            <p>
-                Manage, review and process administrative requests
-                assigned to your department.
-            </p>
+            <nav class="sidebar-nav">
 
-            <div class="dashboard-cards">
+                <a href="#" class="nav-item active">
+                    <span>⌂</span>
+                    Dashboard
+                </a>
 
-                <div class="dashboard-card">
-                    <h3>Pending Requests</h3>
-                    <p>View requests waiting for your action.</p>
-                    <a href="/staff-requests">
-    <button>View Requests</button>
-</a>
+                <a href="/staff-requests" class="nav-item">
+                    <span>▣</span>
+                    Pending Requests
+                </a>
+
+                <a href="#" class="nav-item">
+                    <span>✓</span>
+                    Processed Requests
+                </a>
+
+                <a href="#" class="nav-item">
+                    <span>◉</span>
+                    Notifications
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="profile-mini">
+
+                    <div class="profile-avatar">
+                        {{ username[0] | upper }}
+                    </div>
+
+                    <div>
+                        <strong>{{ username }}</strong>
+                        <span>Staff</span>
+                    </div>
+
                 </div>
 
-                <div class="dashboard-card">
-                    <h3>Processed Requests</h3>
-                    <p>View requests that you have already processed.</p>
-                    <button>View Processed</button>
-                </div>
-
-                <div class="dashboard-card">
-                    <h3>Notifications</h3>
-                    <p>Check important administrative updates.</p>
-                    <button>View Notifications</button>
-                </div>
+                <a href="/login" class="logout-link">
+                    <span>↪</span>
+                    Logout
+                </a>
 
             </div>
 
-        </div>
+        </aside>
+
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <p class="breadcrumb">
+                    Staff Portal / Dashboard
+                </p>
+
+                <div class="topbar-right">
+
+                    <button class="notification-button">
+                        ♧
+                        <span></span>
+                    </button>
+
+                    <div class="top-profile">
+
+                        <div class="profile-avatar small">
+                            {{ username[0] | upper }}
+                        </div>
+
+                        <div>
+                            <strong>{{ username }}</strong>
+                            <small>Staff</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <section class="dashboard-area">
+
+                <div class="welcome-section">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            STAFF DASHBOARD
+                        </p>
+
+                        <h1>
+                            Welcome back, {{ username }}.
+                        </h1>
+
+                        <p class="welcome-text">
+                            Review, process and manage administrative
+                            requests assigned to your department.
+                        </p>
+
+                    </div>
+
+                    <a href="/staff-requests" class="primary-button">
+                        View Requests
+                    </a>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            ▣
+                        </div>
+
+                        <div>
+                            <span>Pending Requests</span>
+                            <h2>—</h2>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            ◷
+                        </div>
+
+                        <div>
+                            <span>Today's Requests</span>
+                            <h2>—</h2>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <span>Processed</span>
+                            <h2>—</h2>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            REQUEST MANAGEMENT
+                        </p>
+
+                        <h2>
+                            Manage administrative requests
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="action-grid">
+
+                    <a href="/staff-requests" class="action-card">
+
+                        <div class="action-icon">
+                            ▣
+                        </div>
+
+                        <div>
+                            <h3>Pending Requests</h3>
+
+                            <p>
+                                Review requests waiting for your
+                                department's action.
+                            </p>
+                        </div>
+
+                        <span class="arrow">→</span>
+
+                    </a>
+
+
+                    <a href="#" class="action-card">
+
+                        <div class="action-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <h3>Processed Requests</h3>
+
+                            <p>
+                                View requests that have already
+                                been processed.
+                            </p>
+                        </div>
+
+                        <span class="arrow">→</span>
+
+                    </a>
+
+
+                    <a href="#" class="action-card">
+
+                        <div class="action-icon">
+                            ◉
+                        </div>
+
+                        <div>
+                            <h3>Notifications</h3>
+
+                            <p>
+                                Check important administrative
+                                updates and alerts.
+                            </p>
+                        </div>
+
+                        <span class="arrow">→</span>
+
+                    </a>
+
+                </div>
+
+
+                <div class="info-banner">
+
+                    <div class="info-symbol">
+                        i
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Request processing overview
+                        </strong>
+
+                        <p>
+                            Review pending requests regularly to
+                            ensure administrative processes move
+                            forward without unnecessary delays.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
 
     </div>
 
