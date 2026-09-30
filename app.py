@@ -22,6 +22,54 @@ app.secret_key = "adminnova-secret-key"
 @app.route("/")
 def home():
     return render_template("index.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+
+        username = request.form["username"]
+        password = request.form["password"]
+        role = request.form["role"]
+
+        cursor = db.cursor(dictionary=True)
+
+        cursor.execute(
+            """
+            SELECT *
+            FROM users
+            WHERE username = %s
+            AND password = %s
+            AND role = %s
+            """,
+            (username, password, role)
+        )
+
+        user = cursor.fetchone()
+        cursor.close()
+
+        if user:
+
+            session["username"] = username
+            session["role"] = role
+
+            if role == "student":
+                return redirect("/student-dashboard")
+
+            if role == "staff":
+                return redirect("/staff-dashboard")
+
+        return "Invalid username, password, or role."
+
+    role = request.args.get("role", "student")
+
+    return render_template(
+        "login.html",
+        role=role
+    )
+
+
 @app.route("/student-dashboard")
 def student_dashboard():
 
@@ -33,9 +81,14 @@ def student_dashboard():
     cursor = db.cursor(dictionary=True)
 
     cursor.execute(
-        "SELECT COUNT(*) AS total FROM requests WHERE student_username = %s",
+        """
+        SELECT COUNT(*) AS total
+        FROM requests
+        WHERE student_username = %s
+        """,
         (username,)
     )
+
     total_requests = cursor.fetchone()["total"]
 
     cursor.execute(
@@ -47,6 +100,7 @@ def student_dashboard():
         """,
         (username,)
     )
+
     pending_requests = cursor.fetchone()["pending"]
 
     cursor.execute(
@@ -58,6 +112,7 @@ def student_dashboard():
         """,
         (username,)
     )
+
     completed_requests = cursor.fetchone()["completed"]
 
     cursor.close()
@@ -70,44 +125,53 @@ def student_dashboard():
         completed_requests=completed_requests
     )
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
 
-        username = request.form["username"]
-        password = request.form["password"]
-        role = request.form["role"]
+@app.route("/staff-dashboard")
+def staff_dashboard():
 
-        cursor = db.cursor(dictionary=True)
+    if "username" not in session or session.get("role") != "staff":
+        return redirect("/login?role=staff")
 
-        cursor.execute(
-            "SELECT * FROM users WHERE username = %s AND password = %s AND role = %s",
-            (username, password, role)
-        )
+    cursor = db.cursor(dictionary=True)
 
-        user = cursor.fetchone()
-        cursor.close()
+    cursor.execute(
+        """
+        SELECT COUNT(*) AS pending
+        FROM requests
+        WHERE status = 'Submitted'
+        """
+    )
 
-        if user:
-            session["username"] = username
-            session["role"] = role
+    pending_requests = cursor.fetchone()["pending"]
 
-            if role == "student":
-                return redirect("/student-dashboard")
+    cursor.execute(
+        """
+        SELECT COUNT(*) AS today
+        FROM requests
+        WHERE DATE(submitted_at) = CURDATE()
+        """
+    )
 
-            if role == "staff":
-                return render_template(
-                    "staff_dashboard.html",
-                    username=username
-                )
+    todays_requests = cursor.fetchone()["today"]
 
-        return "Invalid username, password, or role."
+    cursor.execute(
+        """
+        SELECT COUNT(*) AS processed
+        FROM requests
+        WHERE status IN ('Approved', 'Rejected')
+        """
+    )
 
-    role = request.args.get("role", "student")
+    processed_requests = cursor.fetchone()["processed"]
+
+    cursor.close()
 
     return render_template(
-        "login.html",
-        role=role
+        "staff_dashboard.html",
+        username=session["username"],
+        pending_requests=pending_requests,
+        todays_requests=todays_requests,
+        processed_requests=processed_requests
     )
 
 
@@ -132,7 +196,11 @@ def submit_request():
             (student_username, request_type, description)
             VALUES (%s, %s, %s)
             """,
-            (student_username, request_type, description)
+            (
+                student_username,
+                request_type,
+                description
+            )
         )
 
         db.commit()
@@ -171,6 +239,8 @@ def my_requests():
         "my_requests.html",
         requests=requests_data
     )
+
+
 @app.route("/staff-requests")
 def staff_requests():
 
@@ -196,6 +266,8 @@ def staff_requests():
         "staff_requests.html",
         requests=requests_data
     )
+
+
 @app.route("/update-request/<int:request_id>", methods=["POST"])
 def update_request(request_id):
 
@@ -216,13 +288,22 @@ def update_request(request_id):
     cursor = db.cursor()
 
     cursor.execute(
-        "UPDATE requests SET status = %s WHERE request_id = %s",
-        (new_status, request_id)
+        """
+        UPDATE requests
+        SET status = %s
+        WHERE request_id = %s
+        """,
+        (
+            new_status,
+            request_id
+        )
     )
 
     db.commit()
     cursor.close()
 
     return redirect("/staff-requests")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
