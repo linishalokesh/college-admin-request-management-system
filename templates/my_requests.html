@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>My Requests - AdminNova</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -23,15 +24,32 @@
             {% for req in requests %}
 
             <div class="dashboard-card">
+
                 <h3>{{ req.request_type }}</h3>
 
-                <p>{{ req.description }}</p>
+                <p>
+                    {{ req.description }}
+                </p>
 
-                <p><strong>Status:</strong> {{ req.status }}</p>
+                <p>
+                    <strong>Status:</strong>
+                    {{ req.status }}
+                </p>
 
-                <p><strong>Request ID:</strong> {{ req.request_id }}</p>
+                <p>
+                    <strong>Request ID:</strong>
+                    {{ req.request_id }}
+                </p>
 
-                <p><strong>Submitted:</strong> {{ req.submitted_at }}</p>
+                <p>
+                    <strong>Submitted:</strong>
+                    {{ req.submitted_at }}
+                </p>
+
+                <a href="/request-history/{{ req.request_id }}">
+                    View History
+                </a>
+
             </div>
 
             {% endfor %}

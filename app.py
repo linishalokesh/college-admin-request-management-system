@@ -64,10 +64,7 @@ def login():
 
     role = request.args.get("role", "student")
 
-    return render_template(
-        "login.html",
-        role=role
-    )
+    return render_template("login.html", role=role)
 
 
 @app.route("/student-dashboard")
@@ -178,8 +175,8 @@ def staff_dashboard():
 @app.route("/submit-request", methods=["GET", "POST"])
 def submit_request():
 
-    if "username" not in session:
-        return redirect("/login")
+    if "username" not in session or session.get("role") != "student":
+        return redirect("/login?role=student")
 
     if request.method == "POST":
 
@@ -203,10 +200,26 @@ def submit_request():
             )
         )
 
+        request_id = cursor.lastrowid
+
+        cursor.execute(
+            """
+            INSERT INTO request_history
+            (request_id, action, performed_by, comments)
+            VALUES (%s, %s, %s, %s)
+            """,
+            (
+                request_id,
+                "Submitted",
+                student_username,
+                None
+            )
+        )
+
         db.commit()
         cursor.close()
 
-        return "Request submitted successfully!"
+        return redirect("/my-requests")
 
     return render_template("submit_request.html")
 
@@ -214,8 +227,8 @@ def submit_request():
 @app.route("/my-requests")
 def my_requests():
 
-    if "username" not in session:
-        return redirect("/login")
+    if "username" not in session or session.get("role") != "student":
+        return redirect("/login?role=student")
 
     username = session["username"]
 
@@ -299,10 +312,81 @@ def update_request(request_id):
         )
     )
 
+    cursor.execute(
+        """
+        INSERT INTO request_history
+        (request_id, action, performed_by, comments)
+        VALUES (%s, %s, %s, %s)
+        """,
+        (
+            request_id,
+            new_status,
+            session["username"],
+            None
+        )
+    )
+
     db.commit()
     cursor.close()
 
     return redirect("/staff-requests")
+
+
+@app.route("/request-history/<int:request_id>")
+def request_history(request_id):
+
+    if "username" not in session:
+        return redirect("/login")
+
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute(
+        """
+        SELECT *
+        FROM requests
+        WHERE request_id = %s
+        """,
+        (request_id,)
+    )
+
+    req = cursor.fetchone()
+
+    if not req:
+        cursor.close()
+        return "Request not found."
+
+    if session.get("role") == "student":
+        if req["student_username"] != session["username"]:
+            cursor.close()
+            return "You are not authorized to view this request."
+
+    cursor.execute(
+        """
+        SELECT *
+        FROM request_history
+        WHERE request_id = %s
+        ORDER BY action_time ASC
+        """,
+        (request_id,)
+    )
+
+    history = cursor.fetchall()
+
+    cursor.close()
+
+    return render_template(
+        "request_history.html",
+        history=history,
+        request=req
+    )
+
+
+@app.route("/logout")
+def logout():
+
+    session.clear()
+
+    return redirect("/login")
 
 
 if __name__ == "__main__":

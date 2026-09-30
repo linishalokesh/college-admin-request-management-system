@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Login - AdminNova</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -7,94 +8,140 @@
 
 <body>
 
-    <div class="portal-login">
+<div class="portal-login">
 
-        <div class="login-left">
+    <div class="login-left">
 
-            <div class="college-header">
-                <h2>BMS INSTITUTE OF TECHNOLOGY & MANAGEMENT</h2>
-                <p>College Administrative Portal</p>
-            </div>
+        <div class="college-header">
+            <h2>BMS INSTITUTE OF TECHNOLOGY & MANAGEMENT</h2>
+            <p>College Administrative Portal</p>
+        </div>
 
-            <div class="welcome-content">
-                <h1>Welcome to AdminNova.</h1>
+        <div class="welcome-content">
 
-                <p>
-                    A centralized platform for managing and tracking
-                    college administrative requests.
-                </p>
+            <h1>Welcome to AdminNova.</h1>
 
-                <div class="notice-board">
-                    <h2>Notice Board</h2>
+            <p>
+                A centralized platform for managing and tracking
+                college administrative requests.
+            </p>
 
-                    <div class="notice">
-                        <span>ⓘ</span>
-                        <p>
-                            Submit and track your administrative requests
-                            through one centralized platform.
-                        </p>
-                    </div>
+            <div class="notice-board">
+
+                <h2>Notice Board</h2>
+
+                <div class="notice">
+
+                    <span>ⓘ</span>
+
+                    <p>
+                        Submit and track your administrative requests
+                        through one centralized platform.
+                    </p>
+
                 </div>
+
             </div>
 
         </div>
 
-        <div class="login-right">
+    </div>
 
-            <div class="portal-login-box">
+    <div class="login-right">
 
-                <h1>Login to Your Account</h1>
+        <div class="portal-login-box">
 
-<p class="login-subtitle">
-    Select your portal to continue
-</p>
+            <h1>Login to Your Account</h1>
 
-<div class="role-selection">
+            <p class="login-subtitle">
+                Select your portal to continue
+            </p>
 
-    <button type="button" class="role-button {% if role == 'student' %}active{% endif %}">
-    Student
-</button>
+            <div class="role-selection">
 
-<button type="button" class="role-button {% if role == 'staff' %}active{% endif %}">
-    Staff
-</button>
+                <button
+                    type="button"
+                    class="role-button {% if role == 'student' %}active{% endif %}"
+                    data-role="student">
+                    Student
+                </button>
+
+                <button
+                    type="button"
+                    class="role-button {% if role == 'staff' %}active{% endif %}"
+                    data-role="staff">
+                    Staff
+                </button>
+
+            </div>
+
+            <form method="POST" action="/login">
+
+                <input
+                    type="hidden"
+                    name="role"
+                    id="role"
+                    value="{{ role }}"
+                >
+
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter your username"
+                    required
+                >
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <div class="login-options">
+
+                    <a href="#">Forgot Password?</a>
+
+                    <button type="submit">
+                        LOGIN
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 
 </div>
 
-                    <form method="POST" action="/login">
-                        <input type="hidden" name="role" value="{{ role }}">
-
-    <label>Username</label>
-    <input type="text" name="username" placeholder="Enter your USN">
-
-    <label>Password</label>
-    <input type="password" name="password" placeholder="Enter your password">
-
-    <div class="login-options">
-        <a href="#">Forgot Password?</a>
-        <button type="submit">LOGIN</button>
-    </div>
-
-</form>
-
-            </div>
-
-        </div>
-
-    </div>
 <script>
-    const roleButtons = document.querySelectorAll(".role-button");
 
-    roleButtons.forEach(button => {
-        button.addEventListener("click", function() {
+const roleButtons = document.querySelectorAll(".role-button");
+const roleInput = document.getElementById("role");
 
-            roleButtons.forEach(btn => {
-                btn.classList.remove("active");
-            });
+roleButtons.forEach(button => {
 
-            this.classList.add("active");
+    button.addEventListener("click", function() {
+
+        roleButtons.forEach(btn => {
+            btn.classList.remove("active");
         });
+
+        this.classList.add("active");
+
+        roleInput.value = this.dataset.role;
+
     });
+
+});
+
 </script>
+
 </body>
 </html>
